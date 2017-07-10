@@ -37,14 +37,15 @@ def cache_thing(cache_key, data, cond_dnfs, timeout):
     """
     Writes data to cache and creates appropriate invalidators.
     """
-    load_script('cache_thing', LRU)(
-        keys=[cache_key],
-        args=[
-            pickle.dumps(data, -1),
-            json.dumps(cond_dnfs, default=str),
-            timeout
-        ]
-    )
+    if data:
+        load_script('cache_thing', LRU)(
+            keys=[cache_key],
+            args=[
+                pickle.dumps(data, -1),
+                json.dumps(cond_dnfs, default=str),
+                timeout
+            ]
+        )
 
 
 def cached_as(*samples, **kwargs):
